@@ -10,51 +10,9 @@ var multer = require('multer');
 
 var app = express()
 
-var file = 'traces.json'
 
-var text = fs.readFileSync('traces.json','utf8')
-data = text.split(/\r\n/)
 
-var post = new Array();
-var order = new Array();
-var linecart = new Array();
-var production = new Array();
-var product = new Array();
-
-data.forEach(function(line, index) {
-    if (line.length > 0) {
-        line = JSON.parse(line)
-        
-        switch (line.model_to_join) {
-            case 'Post':
-                post.push(line)
-                break;
-            case 'Dbc_Order':
-                order.push(line)
-                break;
-            case 'Dbc_Linecart':
-                linecart.push(line)
-                break;
-            case 'Dbc_Production':
-                linecart.push(line)
-                break;
-            case 'Fixedproduct':
-                linecart.push(line)
-                break;
-            default:
-                
-        }
-    }
-});
-
-console.log(order.length);
-order.forEach(function(data, index) {
-    for (var i = 0; i < data.newObject.Dbc_Linecart.length; i++) {
-        console.log('------------------');
-        console.log(data.newObject.Dbc_Linecart[i].Fixedproduct.name);
-        console.log(data.newObject.Dbc_Linecart[i].Fixedproduct.quantity);
-    }
-}) 
+ 
 
 // some environment variables
 app.set('port', process.env.PORT || 8000);
