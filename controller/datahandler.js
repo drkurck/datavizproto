@@ -2,18 +2,19 @@ var fs = require('fs');
 
 module.exports.controller = function(app) {
 
-    app.get('/data', function(req, res) {
-    var global = load();
+    // TODO: put route in global file
+    app.get('/datajson', function(req, res) {
+        var global = load();
 
-    var dataPR = prepareData(productRatio(global.order), 'pie');
-    var dataPS = prepareData(productSales(global.order), 'bar');
+        var dataPR = prepareData(productRatio(global.order), 'pie');
+        var dataPS = prepareData(productSales(global.order), 'bar');
 
-    res.render('pages/datajson', {
-        titlePR : 'Quantité produit vendu',
-        dataPR  : dataPR,
-        titlePS : 'Vente des produit',
-        dataPS  : dataPS
-    });
+        res.render('pages/datajson', {
+            titlePR : 'Quantité produit vendu',
+            dataPR  : dataPR,
+            titlePS : 'Vente des produit',
+            dataPS  : dataPS
+        });
   });
 }
 
