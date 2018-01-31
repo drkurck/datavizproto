@@ -50,6 +50,7 @@ server.listen(app.get('port'), function(){
 
 app.listen(3000, () => console.log('Example app listening on port 3000!'))
 
+// TODO: put route in global file
 app.get('/', function(req, res) {
     res.render('pages/home');
 });
