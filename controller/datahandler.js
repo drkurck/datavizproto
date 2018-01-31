@@ -44,7 +44,7 @@ function productRatio(order) {
   var result = new Array();
   order.forEach(function(data, index) {
     for (var i = 0; i < data.newObject.Dbc_Linecart.length; i++) {
-        
+
         if (result[data.newObject.Dbc_Linecart[i].Fixedproduct.name] == undefined) {
             result[data.newObject.Dbc_Linecart[i].Fixedproduct.name] = parseInt(data.newObject.Dbc_Linecart[i].Fixedproduct.quantity);
         } else {
@@ -59,7 +59,7 @@ function productSales(order) {
   var result = new Array();
   order.forEach(function(data, index) {
     for (var i = 0; i < data.newObject.Dbc_Linecart.length; i++) {
-        
+
         if (result[data.newObject.Dbc_Linecart[i].Fixedproduct.name] == undefined) {
             result[data.newObject.Dbc_Linecart[i].Fixedproduct.name] = parseInt(data.newObject.Dbc_Linecart[i].price_ttc);
         } else {
