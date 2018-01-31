@@ -8,7 +8,7 @@ module.exports.controller = function(app) {
     var dataPR = prepareData(productRatio(global.order), 'pie');
     var dataPS = prepareData(productSales(global.order), 'bar');
 
-    res.render('pages/data', {
+    res.render('pages/datajson', {
         titlePR : 'Quantité produit vendu',
         dataPR  : dataPR,
         titlePS : 'Vente des produit',
