@@ -12,15 +12,16 @@
 <main>
     <div class="jumbotron">
         <h1>Rapport</h1>
-        <p><%= title %></p>
+        <p></p>
         <canvas id="pie-PR"></canvas>
+        <canvas id="bar-PS"></canvas>
         <script type="text/javascript">
         new Chart($("#pie-PR"), {
             type: 'pie',
             data: {
               labels: <%- JSON.stringify(dataPR.labels) %>,
               datasets: [{
-                label: "Population (millions)",
+                label: "Quantité des produit",
                 backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
                 data: <%- JSON.stringify(dataPR.datasets) %>
               }]
@@ -28,8 +29,53 @@
             options: {
               title: {
                 display: true,
-                text: 'Predicted world population (millions) in 2050'
+                text: '<%= titlePR %>'
               }
+            }
+        });
+        new Chart($("#bar-PS"), {
+            type: 'bar',
+            data: {
+              labels: <%- JSON.stringify(dataPS.labels) %>,
+              datasets: [
+                    {
+                        label: "Quantité des produit",
+                        yAxisID: 'y-axis-2',
+                        type: 'line',
+                        fill: false,
+                        backgroundColor: ["#fa4242"],
+                        borderColor: '#fa4242',
+                        data: <%- JSON.stringify(dataPR.datasets) %>
+                    }, {
+                        label: "Ventes des produit en €",
+                        yAxisID: 'y-axis-1',
+                        type: 'bar',
+                        backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                        data: <%- JSON.stringify(dataPS.datasets) %>
+                    }
+                ]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: '<%= titlePS %>'
+                },
+                scales: {
+                    yAxes: [{
+                        type: "linear", // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+                        display: true,
+                        position: "left",
+                        id: "y-axis-1",
+                    }, {
+                        type: "linear", // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+                        display: true,
+                        position: "right",
+                        id: "y-axis-2",
+                        gridLines: {
+                            drawOnChartArea: false
+                        }
+                    }],
+                }
             }
         });
         </script>

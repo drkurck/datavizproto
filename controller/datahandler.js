@@ -6,31 +6,39 @@ module.exports.controller = function(app) {
     var global = load();
 
     var dataPR = prepareData(productRatio(global.order), 'pie');
+    var dataPS = prepareData(productSales(global.order), 'bar');
+
     res.render('pages/data', {
-        title: 'Produit vendu',
-        dataPR: dataPR
+        titlePR : 'Quantité produit vendu',
+        dataPR  : dataPR,
+        titlePS : 'Vente des produit',
+        dataPS  : dataPS
     });
   });
-
 }
 
 function prepareData(dataIn, chart) {
-    var dataOut = new Array();
     switch (chart) {
         case 'pie':
-            dataOut.datasets = new Array();
-            dataOut.labels = new Array();
-            for (var key in dataIn) {
-                dataOut.datasets.push(dataIn[key])
-                dataOut.labels.push(key)
-            }
+            dataOut = basicPrepare(dataIn)
             break;
         default:
+            dataOut = basicPrepare(dataIn)
     }
     console.log(dataOut);
     return dataOut;
 }
 
+function basicPrepare(data) {
+    var dataOut = new Array();
+    dataOut.datasets = new Array();
+    dataOut.labels = new Array();
+    for (var key in data) {
+        dataOut.datasets.push(data[key])
+        dataOut.labels.push(key)
+    }
+    return dataOut
+}
 function productRatio(order) {
   var result = new Array();
   order.forEach(function(data, index) {
@@ -40,6 +48,21 @@ function productRatio(order) {
             result[data.newObject.Dbc_Linecart[i].Fixedproduct.name] = parseInt(data.newObject.Dbc_Linecart[i].Fixedproduct.quantity);
         } else {
             result[data.newObject.Dbc_Linecart[i].Fixedproduct.name] += parseInt(data.newObject.Dbc_Linecart[i].Fixedproduct.quantity);
+        }
+    }
+  })
+  return result;
+}
+
+function productSales(order) {
+  var result = new Array();
+  order.forEach(function(data, index) {
+    for (var i = 0; i < data.newObject.Dbc_Linecart.length; i++) {
+        
+        if (result[data.newObject.Dbc_Linecart[i].Fixedproduct.name] == undefined) {
+            result[data.newObject.Dbc_Linecart[i].Fixedproduct.name] = parseInt(data.newObject.Dbc_Linecart[i].price_ttc);
+        } else {
+            result[data.newObject.Dbc_Linecart[i].Fixedproduct.name] += parseInt(data.newObject.Dbc_Linecart[i].price_ttc);
         }
     }
   })
