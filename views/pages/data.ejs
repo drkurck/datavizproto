@@ -11,8 +11,28 @@
 
 <main>
     <div class="jumbotron">
-        <h1>This is great</h1>
-        <p>Welcome to templating using EJS</p>
+        <h1>Rapport</h1>
+        <p><%= title %></p>
+        <canvas id="pie-PR"></canvas>
+        <script type="text/javascript">
+        new Chart($("#pie-PR"), {
+            type: 'pie',
+            data: {
+              labels: <%- JSON.stringify(dataPR.labels) %>,
+              datasets: [{
+                label: "Population (millions)",
+                backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                data: <%- JSON.stringify(dataPR.datasets) %>
+              }]
+            },
+            options: {
+              title: {
+                display: true,
+                text: 'Predicted world population (millions) in 2050'
+              }
+            }
+        });
+        </script>
     </div>
 </main>
 

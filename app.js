@@ -25,6 +25,8 @@ app.use(bodyParser.json());
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
+app.use('/chart', express.static(__dirname + '/node_modules/chart.js/dist/'));
 
 // parse multipart/form-data
 // app.use(multer());

@@ -2,32 +2,48 @@ var fs = require('fs');
 
 module.exports.controller = function(app) {
 
-  /**
-   * a home page route
-   */
-  app.get('/data', function(req, res) {
-    // any logic goes here
-
-
+    app.get('/data', function(req, res) {
     var global = load();
 
-    var dataPR = productRatio(global.order);
-    res.render('pages/data')
+    var dataPR = prepareData(productRatio(global.order), 'pie');
+    res.render('pages/data', {
+        title: 'Produit vendu',
+        dataPR: dataPR
+    });
   });
 
 }
 
+function prepareData(dataIn, chart) {
+    var dataOut = new Array();
+    switch (chart) {
+        case 'pie':
+            dataOut.datasets = new Array();
+            dataOut.labels = new Array();
+            for (var key in dataIn) {
+                dataOut.datasets.push(dataIn[key])
+                dataOut.labels.push(key)
+            }
+            break;
+        default:
+    }
+    console.log(dataOut);
+    return dataOut;
+}
+
 function productRatio(order) {
-  console.log(order.length);
   var result = new Array();
   order.forEach(function(data, index) {
     for (var i = 0; i < data.newObject.Dbc_Linecart.length; i++) {
-      console.log('------------------');
-      console.log(data.newObject.Dbc_Linecart[i].Fixedproduct.name);
-      console.log(data.newObject.Dbc_Linecart[i].Fixedproduct.quantity);
-
+        
+        if (result[data.newObject.Dbc_Linecart[i].Fixedproduct.name] == undefined) {
+            result[data.newObject.Dbc_Linecart[i].Fixedproduct.name] = parseInt(data.newObject.Dbc_Linecart[i].Fixedproduct.quantity);
+        } else {
+            result[data.newObject.Dbc_Linecart[i].Fixedproduct.name] += parseInt(data.newObject.Dbc_Linecart[i].Fixedproduct.quantity);
+        }
     }
   })
+  return result;
 }
 
 function load() {
