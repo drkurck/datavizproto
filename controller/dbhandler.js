@@ -30,7 +30,11 @@ module.exports.controller = function(app) {
             if (req.body.operation === 'none') {
                 request = "SELECT "+req.body.arg1+" AS elmt1, "+req.body.arg2+ " AS elmt2 FROM dbcorders GROUP BY "+ req.body.arg2
             } else {
-                request = "SELECT "+ req.body.operation +"("+req.body.arg1+") AS elmt1, "+req.body.arg2+ " AS elmt2 FROM dbcorders GROUP BY "+ req.body.arg2
+                if (req.body.arg2 == 'created') {
+                    request = "SELECT "+ req.body.operation +"("+req.body.arg1+") AS elmt1, DATE_FORMAT("+req.body.arg2+", \"%d %M %Y\") AS elmt2 FROM dbcorders GROUP BY DATE_FORMAT("+req.body.arg2+", \"%d %M %Y\")"
+                } else {
+                    request = "SELECT "+ req.body.operation +"("+req.body.arg1+") AS elmt1, "+req.body.arg2+ " AS elmt2 FROM dbcorders GROUP BY "+ req.body.arg2
+                }
                 
             }
             console.log(request);
