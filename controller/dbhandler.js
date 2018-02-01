@@ -53,8 +53,6 @@ module.exports.controller = function(app) {
                             colors.push('#'+(Math.random()*0xFFFFFF<<0).toString(16));
                         }
                     }
-                    console.log(data);
-                    console.log(label);
                     
                     res.render('pages/datadb', {
                         column: new Array(),
