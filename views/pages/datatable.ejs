@@ -1,26 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <% include ../partials/head %>
+  <% include ../partials/head %>
 </head>
 <body class="container">
-    
-    <header>
-        <% include ../partials/header %>
-    </header>
-    
-    <main>
-        <div class="jumbotron">
-            <h1>Rapport DB</h1>
-            <div class="form-group">
-                <form action="datadb" method="POST">
-                </form>
+
+  <header>
+    <% include ../partials/header %>
+  </header>
+
+  <main>
+    <div class="jumbotron">
+      <h1>Rapport DB</h1>
+      <div class="form-group">
+
+          <form action="datatable" method="POST">
+            <div class="form-check">
+              <% column.forEach(function(col) { %>
+                <input class="form-check-input" type="checkbox" name="<%= col.name %>" value="<%= col.type %>"><%= col.name %><br>
+              <% }); %>
             </div>
-        </ul>
+
+            <input class="form-control" type="submit">
+          </form>
+        </div>
+      </ul>
     </div>
-</main>
-<footer>
+  </main>
+
+  <footer>
     <% include ../partials/footer %>
-</footer>
+  </footer>
 </body>
 </html>
