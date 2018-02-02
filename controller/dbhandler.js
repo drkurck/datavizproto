@@ -92,10 +92,10 @@ module.exports.controller = function(app) {
 
   app.post('/dataTable', function(req, res) {
     var select = '';
-    var i = 0;
+    var countCol = 0;
     for (elmt in req.body) {
-      select += elmt + ' AS col' + i + ', ';
-      i++;
+      select += elmt + ' AS col' + countCol + ', ';
+      countCol++;
     }
     select = "SELECT " + select.substring(0, select.length - 2) +
       " FROM dbcorders";
@@ -103,11 +103,18 @@ module.exports.controller = function(app) {
       select,
       function(err, rows, fields) {
         if (err) throw err
-        for (var key in rows) {
-          console.log(rows);
-        }
+          // data = new Array();
+          // for (var key in rows) {
+          //   line = new Array();
+          //   for (var i = 0; i < countCol; i++) {
+          //     line.push(rows[key]['col' + i]);
+          //   }
+          //   data.push(line)
+          // }
+          // console.log(data);
         res.render('pages/datatable', {
-          column: column
+          column: new Array(),
+          data = rows
         })
       })
   })
